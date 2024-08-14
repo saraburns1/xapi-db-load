@@ -80,10 +80,10 @@ class RandomCourse:
         course_config_name,
         course_size_makeup
     ):
-        self.course_uuid = str(uuid.uuid4())[:6]
+        self.course_uuid = random.randint(1000,1005)
         self.course_name = f"{self.course_uuid}_{course_config_name}"
         self.org = org
-        self.course_id = f"course-v1:{org}+DemoX+{self.course_uuid}+{random.randint(1,4)}"
+        self.course_id = f"course-v1:{org}+DemoX+{self.course_uuid}+{str(uuid.uuid4())[:5]}"
         self.course_url = f"http://localhost:18000/course/{self.course_id}"
 
         delta = datetime.timedelta(days=course_length)
