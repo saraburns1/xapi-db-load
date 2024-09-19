@@ -196,23 +196,23 @@ class XAPILakeClickhouse:
                 '{actor.language}',
                 '{actor.location}',
                 '{actor.year_of_birth}',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                ''
+                '{actor.gender}',
+                '{actor.level_of_education}',
+                '{actor.mailing_address}',
+                '{actor.city}',
+                '{actor.country}',
+                '{actor.state}',
+                '{actor.goals}',
+                '{actor.bio}',
+                '{actor.profile_image_uploaded_at}',
+                '{actor.phone_number}',
+                '{dump_id}',
+                '{dump_time}'
             )"""
 
             out_profile.append(profile_row)
 
-        # self._insert_list_sql_retry(out_external_id, "external_id")
+        self._insert_list_sql_retry(out_external_id, "external_id")
         self._insert_list_sql_retry(out_profile, "user_profile")
 
     def insert_event_sink_taxonomies(self, taxonomies):
