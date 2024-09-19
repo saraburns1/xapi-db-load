@@ -212,7 +212,7 @@ class XAPILakeClickhouse:
 
             out_profile.append(profile_row)
 
-        self._insert_list_sql_retry(out_external_id, "external_id")
+        # self._insert_list_sql_retry(out_external_id, "external_id")
         self._insert_list_sql_retry(out_profile, "user_profile")
 
     def insert_event_sink_taxonomies(self, taxonomies):
@@ -311,17 +311,15 @@ class XAPILakeClickhouse:
         # Sometimes the connection randomly dies, this gives us a second shot in that case
         try:
             self.client.command(sql)
-        except:
+        except clickhouse_connect.driver.exceptions.OperationalError:
+            print("ClickHouse OperationalError, trying to reconnect.")
+            self.set_client()
+            print("Retrying insert...")
+            self.client.command(sql)
+        except clickhouse_connect.driver.exceptions.DatabaseError:
+            print("ClickHouse DatabaseError:")
+            print(sql)
             raise
-        # except clickhouse_connect.driver.exceptions.OperationalError:
-        #     print("ClickHouse OperationalError, trying to reconnect.")
-        #     self.set_client()
-        #     print("Retrying insert...")
-        #     self.client.command(sql)
-        # except clickhouse_connect.driver.exceptions.DatabaseError:
-        #     print("ClickHouse DatabaseError:")
-        #     print(sql)
-        #     raise
 
     def load_from_s3(self, s3_location):
         """
