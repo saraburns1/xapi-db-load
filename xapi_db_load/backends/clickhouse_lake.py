@@ -248,7 +248,7 @@ class XAPILakeClickhouse:
             out_tag = f"""(
                 {tag["tag_id"]},
                 {tag["taxonomy_id"]},
-                0,
+                {tag["parent_id"]},
                 '{tag["value"]}',
                 '{tag["id"]}',
                 '{tag["hierarchy"]}',
