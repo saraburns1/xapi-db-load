@@ -213,7 +213,14 @@ class XAPILakeClickhouse:
             out_profile.append(profile_row)
 
         self._insert_list_sql_retry(out_external_id, "external_id")
-        self._insert_list_sql_retry(out_profile, "user_profile")
+        # self._insert_list_sql_retry(out_profile, "user_profile")
+
+        vals = ",".join(out_profile)
+        sql = f"""
+                INSERT INTO {self.event_sink_database}.user_profile
+                VALUES {vals}
+            """
+        self._insert_sql_with_retry(sql)
 
     def insert_event_sink_taxonomies(self, taxonomies):
         """
