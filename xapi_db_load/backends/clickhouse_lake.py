@@ -189,8 +189,25 @@ class XAPILakeClickhouse:
             profile_row = f"""(
                 '{actor.user_id}',
                 '{actor.user_id}',
-                '{dump_id}',
-                '{dump_time}'
+                '{actor.name}',
+                '{actor.username}@aspects.invalid',
+                '{actor.meta}',
+                '{actor.courseware}',
+                '{actor.language}',
+                '{actor.location}',
+                '{actor.year_of_birth}',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                ''
             )"""
 
             out_profile.append(profile_row)
