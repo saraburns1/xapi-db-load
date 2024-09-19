@@ -213,6 +213,8 @@ class XAPILakeClickhouse:
             out_profile.append(profile_row)
 
         self._insert_list_sql_retry(out_external_id, "external_id")
+
+        print(f'1-------------{out_profile}')
         self._insert_list_sql_retry(out_profile, "user_profile")
 
     def insert_event_sink_taxonomies(self, taxonomies):
