@@ -172,7 +172,7 @@ class XAPILakeClickhouse:
         out_profile = []
         for actor in actors:
             dump_id = str(uuid.uuid4())
-            dump_time = datetime.now(UTC)
+            dump_time = datetime.utcnow()
 
             id_row = f"""(
                 '{actor.id}',
@@ -213,7 +213,6 @@ class XAPILakeClickhouse:
             out_profile.append(profile_row)
 
         self._insert_list_sql_retry(out_external_id, "external_id")
-
         self._insert_list_sql_retry(out_profile, "user_profile")
 
     def insert_event_sink_taxonomies(self, taxonomies):
