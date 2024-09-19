@@ -301,7 +301,7 @@ class XAPILakeClickhouse:
                 INSERT INTO {database}.{table}
                 VALUES {",".join(data_list)}
         """
-
+        print(sql)
         self._insert_sql_with_retry(sql)
 
     def _insert_sql_with_retry(self, sql):
