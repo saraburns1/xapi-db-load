@@ -266,9 +266,9 @@ def generate_events(config, backend):
     with LogTimer("insert_metadata", "blocks"):
         backend.insert_event_sink_block_data(event_generator.courses)
 
-    print("Inserting user data...")
-    with LogTimer("insert_metadata", "user_data"):
-        backend.insert_event_sink_actor_data(event_generator.actors)
+    # print("Inserting user data...")
+    # with LogTimer("insert_metadata", "user_data"):
+    #     backend.insert_event_sink_actor_data(event_generator.actors)
 
     print("Inserting taxonomy data...")
     with LogTimer("insert_metadata", "taxonomy"):
