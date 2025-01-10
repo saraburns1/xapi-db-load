@@ -34,7 +34,7 @@ from xapi_db_load.xapi.xapi_video import (
 # events that should be generated for each. Should total roughly 100 to keep
 # percentages simple.
 EVENT_LOAD = (
-    (CourseGradeCalculated, 20.0),
+    (CourseGradeCalculated, 20),
     (PlayedVideo, 14.019),
     (NextNavigation, 12.467),
     (BrowserProblemCheck, 9.9),

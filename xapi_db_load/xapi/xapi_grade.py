@@ -28,6 +28,7 @@ class FirstTimePassed(XAPIBase):
 
         e = self.get_randomized_event(event_id, actor_id, course, emission_time)
 
+        print(e)
         return {
             "event_id": event_id,
             "verb": self.verb,
@@ -42,6 +43,15 @@ class FirstTimePassed(XAPIBase):
         """
         Given the inputs, return an xAPI statement.
         """
+        max_score = random.randint(66, 100)
+        raw_score = random.randint(65, max_score)
+        scaled_score = raw_score / max_score
+        score_obj = {
+            "scaled": scaled_score,
+            "raw": raw_score,
+            "min": 0.0,
+            "max": max_score
+        }
         event = {
             "id": event_id,
             "actor": {
@@ -62,6 +72,9 @@ class FirstTimePassed(XAPIBase):
                 },
                 "id": course.course_url,
                 "objectType": "Activity",
+            },
+            "result": {
+                "score": score_obj,
             },
             "timestamp": create_time.isoformat(),
             "verb": {"display": {"en": self.verb_display}, "id": self.verb},
@@ -91,7 +104,8 @@ class GradeCalculated(XAPIBase):
         emission_time = course.get_random_emission_time(enrolled_actor)
 
         e = self.get_randomized_event(event_id, actor_id, course, emission_time)
-        return {
+        events = []
+        events.append({
             "event_id": event_id,
             "verb": self.verb,
             "actor_id": actor_id,
@@ -99,7 +113,8 @@ class GradeCalculated(XAPIBase):
             "course_run_id": course.course_url,
             "emission_time": emission_time,
             "event": e,
-        }
+        })
+        return events
 
     def get_randomized_event(self, event_id, actor_id, course, emission_time):
         """
