@@ -28,7 +28,7 @@ class FirstTimePassed(XAPIBase):
 
         e = self.get_randomized_event(event_id, actor_id, course, emission_time)
 
-        print(e)
+        print(f'-------------------{e}')
         return {
             "event_id": event_id,
             "verb": self.verb,
