@@ -282,7 +282,10 @@ class RandomCourse:
             "location": block_id.split("/xblock/")[-1],
             "display_name": f"{block_type.title()} {cnt}",
             # This gets appended with location data below
-            "xblock_data_json": {"block_type": block_type},
+            "xblock_data_json": {
+                "block_type": block_type,
+                "graded": 1 if block_type == "sequential" else 0,
+            },
             "order": cnt,
             "edited_on": self.end_date,
         }

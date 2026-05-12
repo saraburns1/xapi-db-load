@@ -15,7 +15,7 @@ from xapi_db_load.course_configs import Actor, RandomCourse
 from xapi_db_load.fixtures.music_tags import MUSIC_TAGS
 from xapi_db_load.waiter import Waiter
 from xapi_db_load.xapi.xapi_forum import PostCreated
-from xapi_db_load.xapi.xapi_grade import CourseGradeCalculated, FirstTimePassed
+from xapi_db_load.xapi.xapi_grade import CourseGradeCalculated, FirstTimePassed, SubsectionGradeCalculated
 from xapi_db_load.xapi.xapi_hint_answer import ShowAnswer, ShowHint
 from xapi_db_load.xapi.xapi_navigation import (
     LinkClicked,
@@ -41,6 +41,7 @@ from xapi_db_load.xapi.xapi_video import (
 # percentages simple.
 EVENT_LOAD = (
     (CourseGradeCalculated, 20.0),
+    (SubsectionGradeCalculated, 10.0),
     (PlayedVideo, 14.019),
     (NextNavigation, 12.467),
     (BrowserProblemCheck, 9.9),
@@ -180,7 +181,7 @@ class EventGenerator(Waiter):
                 ]
                 org = choice(self.orgs)
                 actors = choices(self.actors, k=course_config_makeup["actors"])
-                course_key = self.config.get("course_key") or str(uuid.uuid4())[:6]
+                course_name = self.config.get("course_name") or str(uuid.uuid4())[:6]
                 course_run = self.config.get("course_run")
                 runs = 1 if course_run else random.randrange(1, 5)
                 run_ids = [course_run] if course_run else range(runs)
@@ -190,7 +191,7 @@ class EventGenerator(Waiter):
                 for run_id in run_ids:
                     course = await RandomCourse().populate(
                         org,
-                        course_key,
+                        course_name,
                         run_id,
                         self.start_date,
                         self.end_date,
