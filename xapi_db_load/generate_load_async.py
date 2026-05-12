@@ -180,15 +180,17 @@ class EventGenerator(Waiter):
                 ]
                 org = choice(self.orgs)
                 actors = choices(self.actors, k=course_config_makeup["actors"])
-                runs = random.randrange(1, 5)
-                course_id = self.config.get("course_id") or str(uuid.uuid4())[:6]
+                course_key = self.config.get("course_key") or str(uuid.uuid4())[:6]
+                course_run = self.config.get("course_run")
+                runs = 1 if course_run else random.randrange(1, 5)
+                run_ids = [course_run] if course_run else range(runs)
 
                 # Create 1-5 of the same course size / makeup / name
                 # but different course runs.
-                for run_id in range(runs):
+                for run_id in run_ids:
                     course = await RandomCourse().populate(
                         org,
-                        course_id,
+                        course_key,
                         run_id,
                         self.start_date,
                         self.end_date,

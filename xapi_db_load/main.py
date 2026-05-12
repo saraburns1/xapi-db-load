@@ -74,12 +74,12 @@ def ui(config_file: str):
     type=str,
 )
 @click.option(
-    "--course_id",
-    help="If provided, use this course ID (the middle segment of course-v1:Org+CourseID+Run) instead of generating a random one.",
+    "--course_key",
+    help="If provided, use this course key (the middle segment of course-v1:Org+CourseKey+Run) instead of generating a random one.",
     default=None,
     type=str,
 )
-def load_db(config_file: str, load_db_only: bool, org: str, course_id: str):
+def load_db(config_file: str, load_db_only: bool, org: str, course_key: str):
     """
     Execute a database load by performing inserts.
     """
@@ -94,8 +94,8 @@ def load_db(config_file: str, load_db_only: bool, org: str, course_id: str):
     config = get_config(config_file)
     if org is not None:
         config["org"] = org
-    if course_id is not None:
-        config["course_id"] = course_id
+    if course_key is not None:
+        config["course_key"] = course_key
     app = App(config)
     asyncio.run(app.runner.run(load_db_only))
     print(f"Total duration: {datetime.datetime.now() - start}")
