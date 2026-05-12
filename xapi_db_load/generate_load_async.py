@@ -145,8 +145,11 @@ class EventGenerator(Waiter):
         """
         Create some random organizations based on the config.
         """
-        for i in range(self.config["num_organizations"]):
-            self.orgs.append(f"Org{i}")
+        if self.config.get("org"):
+            self.orgs.append(self.config["org"])
+        else:
+            for i in range(self.config["num_organizations"]):
+                self.orgs.append(f"Org{i}")
 
     async def setup_courses(self):
         """
@@ -178,7 +181,7 @@ class EventGenerator(Waiter):
                 org = choice(self.orgs)
                 actors = choices(self.actors, k=course_config_makeup["actors"])
                 runs = random.randrange(1, 5)
-                course_id = str(uuid.uuid4())[:6]
+                course_id = self.config.get("course_id") or str(uuid.uuid4())[:6]
 
                 # Create 1-5 of the same course size / makeup / name
                 # but different course runs.

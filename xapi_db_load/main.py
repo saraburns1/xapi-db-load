@@ -67,7 +67,19 @@ def ui(config_file: str):
     help="If this option is passed we will try to load from the configured block storage, no new data will be generated.",
     is_flag=True,
 )
-def load_db(config_file: str, load_db_only: bool):
+@click.option(
+    "--org",
+    help="If provided, use this org name instead of generating random orgs.",
+    default=None,
+    type=str,
+)
+@click.option(
+    "--course_id",
+    help="If provided, use this course ID (the middle segment of course-v1:Org+CourseID+Run) instead of generating a random one.",
+    default=None,
+    type=str,
+)
+def load_db(config_file: str, load_db_only: bool, org: str, course_id: str):
     """
     Execute a database load by performing inserts.
     """
@@ -80,6 +92,10 @@ def load_db(config_file: str, load_db_only: bool):
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
     start = datetime.datetime.now()
     config = get_config(config_file)
+    if org is not None:
+        config["org"] = org
+    if course_id is not None:
+        config["course_id"] = course_id
     app = App(config)
     asyncio.run(app.runner.run(load_db_only))
     print(f"Total duration: {datetime.datetime.now() - start}")
